@@ -5,14 +5,19 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public GameObject SnakePrefab;
-    public GameObject blockPrefab;
+    public GameObject BlockPrefab;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+	{
 	}
-	
-	// Update is called once per frame
+
+    public void SpawnSnake()
+    {
+        Instantiate(SnakePrefab);
+    }
+
+    // Update is called once per frame
 	void Update () {
 		
 	}

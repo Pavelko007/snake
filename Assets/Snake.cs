@@ -7,8 +7,10 @@ public class Snake : MonoBehaviour
     public GameObject SnakeSegment;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+	{
+	    GameObject snakeSegment = Instantiate(SnakeSegment);
+        snakeSegment.transform.SetParent(transform);
 	}
 	
 	// Update is called once per frame
