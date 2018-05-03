@@ -63,7 +63,7 @@ public class Snake : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("collision");
+        if(other.CompareTag("Collectable"))Debug.Log("collision");
     }
 
     private void HandleInput()
