@@ -14,6 +14,7 @@ public class Snake : MonoBehaviour
     private bool createNewSegment;
     private Vector3 moveVector;
     private float stepDist = 1.0f;
+    private GameObject newSegment;
 
     void Awake()
     {
@@ -31,12 +32,6 @@ public class Snake : MonoBehaviour
     {
 	    HandleInput();
 
-	    if (Input.GetKeyDown(KeyCode.G))
-	    {
-	        createNewSegment = true;
-	        newSegmentPosition = snakeSegmentsList.Last.Value.transform.position;
-	    }
-
 	    if (Time.time - lastStepTime > stepDuration)
 	    {
 	        Vector3 headPos = snakeSegmentsList.First.Value.transform.position;
@@ -51,9 +46,7 @@ public class Snake : MonoBehaviour
 	        if (createNewSegment)
 	        {
 	            createNewSegment = false;
-	            var newSegment = Instantiate(SnakeSegment);
-	            newSegment.transform.SetParent(transform);
-	            newSegment.transform.position = newSegmentPosition;
+	            newSegment.transform.SetParent(transform, true);
 	            snakeSegmentsList.AddLast(newSegment);
 	        }
 
@@ -63,7 +56,12 @@ public class Snake : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Collectable"))Debug.Log("collision");
+        if (other.CompareTag("Collectable"))
+        {
+            createNewSegment = true;
+            newSegment = other.gameObject;
+            newSegment.tag = "Untagged";
+        }
     }
 
     private void HandleInput()
