@@ -7,10 +7,11 @@ public class Snake : MonoBehaviour
     public List<GameObject> StartConfiguration;
     public GameObject SnakeSegment;
 
-    private GameObject snakeSegment;
     private float lastStepTime;
     private float stepDuration = .5f;
     private LinkedList<GameObject> snakeSegmentsList = new LinkedList<GameObject>();
+    private Vector3 newSegmentPosition;
+    private bool createNewSegment;
 
     void Awake()
     {
@@ -24,6 +25,12 @@ public class Snake : MonoBehaviour
 
 	// Update is called once per frame
 	void Update () {
+	    if (Input.GetKeyDown(KeyCode.G))
+	    {
+	        createNewSegment = true;
+	        newSegmentPosition = snakeSegmentsList.Last.Value.transform.position;
+	    }
+
 	    if (Time.time - lastStepTime > stepDuration)
 	    {
 	        Vector3 headPos = snakeSegmentsList.First.Value.transform.position;
@@ -32,6 +39,15 @@ public class Snake : MonoBehaviour
 	        snakeSegmentsList.AddFirst(snakeSegmentsList.Last.Value);
             snakeSegmentsList.RemoveLast();
 	        snakeSegmentsList.First.Value.transform.position = headPosNext;
+
+	        if (createNewSegment)
+	        {
+	            createNewSegment = false;
+	            var newSegment = Instantiate(SnakeSegment);
+	            newSegment.transform.SetParent(transform);
+	            newSegment.transform.position = newSegmentPosition;
+	            snakeSegmentsList.AddLast(newSegment);
+	        }
 
 	        lastStepTime = Time.time;
 	    }
