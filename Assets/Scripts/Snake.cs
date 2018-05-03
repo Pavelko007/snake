@@ -12,6 +12,8 @@ public class Snake : MonoBehaviour
     private LinkedList<GameObject> snakeSegmentsList = new LinkedList<GameObject>();
     private Vector3 newSegmentPosition;
     private bool createNewSegment;
+    private Vector3 moveVector;
+    private float stepDist = 1.0f;
 
     void Awake()
     {
@@ -20,11 +22,15 @@ public class Snake : MonoBehaviour
         {
             snakeSegmentsList.AddLast(segment);
         }
+
+        moveVector = Vector3.up;
     }
-	
 
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+	    HandleInput();
+
 	    if (Input.GetKeyDown(KeyCode.G))
 	    {
 	        createNewSegment = true;
@@ -34,7 +40,9 @@ public class Snake : MonoBehaviour
 	    if (Time.time - lastStepTime > stepDuration)
 	    {
 	        Vector3 headPos = snakeSegmentsList.First.Value.transform.position;
-	        Vector3 headPosNext = headPos + Vector3.up;
+	        
+
+	        Vector3 headPosNext = headPos + stepDist * moveVector;
 
 	        snakeSegmentsList.AddFirst(snakeSegmentsList.Last.Value);
             snakeSegmentsList.RemoveLast();
@@ -51,6 +59,25 @@ public class Snake : MonoBehaviour
 
 	        lastStepTime = Time.time;
 	    }
-		
 	}
+
+    private void HandleInput()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            moveVector = Vector3.left;
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            moveVector = Vector3.right;
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            moveVector = Vector3.up;
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            moveVector = Vector3.down;
+        }
+    }
 }
