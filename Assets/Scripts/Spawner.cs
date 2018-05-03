@@ -16,7 +16,12 @@ public class Spawner : MonoBehaviour
     {
         Instantiate(SnakePrefab);
         var block = Instantiate(BlockPrefab);
-        block.transform.position = new Vector3(3,2,0);
+        block.transform.position = GetRandomPosition();
+    }
+
+    private static Vector3 GetRandomPosition()
+    {
+        return new Vector3(Random.Range(-3,3), Random.Range(-3, 3), 0);
     }
 
     // Update is called once per frame
