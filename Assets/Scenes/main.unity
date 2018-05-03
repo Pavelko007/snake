@@ -143,7 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SnakePrefab: {fileID: 1934988197406358, guid: de520354692849f4d944e8da7dd5948e,
     type: 2}
-  BlockPrefab: {fileID: 0}
+  BlockPrefab: {fileID: 1726271490102248, guid: 0d340b68a72080341be8391ea409a296,
+    type: 2}
 --- !u!114 &343625800
 MonoBehaviour:
   m_ObjectHideFlags: 0

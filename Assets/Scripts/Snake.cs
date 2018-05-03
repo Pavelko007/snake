@@ -25,7 +25,7 @@ public class Snake : MonoBehaviour
 
         moveVector = Vector3.up;
     }
-
+    
 	// Update is called once per frame
 	void Update ()
     {
@@ -60,6 +60,11 @@ public class Snake : MonoBehaviour
 	        lastStepTime = Time.time;
 	    }
 	}
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("collision");
+    }
 
     private void HandleInput()
     {

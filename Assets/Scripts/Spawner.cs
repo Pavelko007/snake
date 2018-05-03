@@ -15,6 +15,8 @@ public class Spawner : MonoBehaviour
     public void SpawnSnake()
     {
         Instantiate(SnakePrefab);
+        var block = Instantiate(BlockPrefab);
+        block.transform.position = new Vector3(3,2,0);
     }
 
     // Update is called once per frame
