@@ -4,27 +4,35 @@ using UnityEngine;
 
 public class Snake : MonoBehaviour
 {
+    public List<GameObject> StartConfiguration;
     public GameObject SnakeSegment;
+
     private GameObject snakeSegment;
     private float lastStepTime;
     private float stepDuration = .5f;
+    private LinkedList<GameObject> snakeSegmentsList = new LinkedList<GameObject>();
 
     void Awake()
     {
         lastStepTime = Time.time;
+        foreach (var segment in StartConfiguration)
+        {
+            snakeSegmentsList.AddLast(segment);
+        }
     }
-    // Use this for initialization
-	void Start ()
-	{
-	    snakeSegment = Instantiate(SnakeSegment);
-	    snakeSegment.transform.SetParent(transform);
-	}
 	
+
 	// Update is called once per frame
 	void Update () {
 	    if (Time.time - lastStepTime > stepDuration)
 	    {
-	        snakeSegment.transform.Translate(Vector3.up);
+	        Vector3 headPos = snakeSegmentsList.First.Value.transform.position;
+	        Vector3 headPosNext = headPos + Vector3.up;
+
+	        snakeSegmentsList.AddFirst(snakeSegmentsList.Last.Value);
+            snakeSegmentsList.RemoveLast();
+	        snakeSegmentsList.First.Value.transform.position = headPosNext;
+
 	        lastStepTime = Time.time;
 	    }
 		
