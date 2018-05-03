@@ -22,8 +22,7 @@ public class Spawner : MonoBehaviour
     public void SpawnSnake()
     {
         snakeFactory.Create();
-        var block = Instantiate(BlockPrefab);
-        block.transform.position = GetRandomPosition();
+        SpawnNextSegment();
     }
 
     private static Vector3 GetRandomPosition()
@@ -31,8 +30,9 @@ public class Spawner : MonoBehaviour
         return new Vector3(Random.Range(-3,3), Random.Range(-3, 3), 0);
     }
 
-    // Update is called once per frame
-	void Update () {
-		
-	}
+    public void SpawnNextSegment()
+    {
+        var block = Instantiate(BlockPrefab);
+        block.transform.position = GetRandomPosition();
+    }
 }

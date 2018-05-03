@@ -19,7 +19,7 @@ public class Snake : MonoBehaviour
     private Spawner spawner;
 
     [Inject]
-    void Construct(Spawner spanwer)
+    void Construct(Spawner spawner)
     {
         this.spawner = spawner;
     }
@@ -56,6 +56,8 @@ public class Snake : MonoBehaviour
 	            createNewSegment = false;
 	            newSegment.transform.SetParent(transform, true);
 	            snakeSegmentsList.AddLast(newSegment);
+
+	            spawner.SpawnNextSegment();
 	        }
 
 	        lastStepTime = Time.time;
