@@ -1,12 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class Spawner : MonoBehaviour
 {
     public GameObject SnakePrefab;
     public GameObject BlockPrefab;
+    private Snake.Factory snakeFactory;
 
+    [Inject]
+    void Construct(Snake.Factory snakeFactory)
+    {
+        this.snakeFactory = snakeFactory;
+    }
 	// Use this for initialization
 	void Start ()
 	{
@@ -14,7 +21,7 @@ public class Spawner : MonoBehaviour
 
     public void SpawnSnake()
     {
-        Instantiate(SnakePrefab);
+        snakeFactory.Create();
         var block = Instantiate(BlockPrefab);
         block.transform.position = GetRandomPosition();
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class Snake : MonoBehaviour
 {
@@ -15,6 +16,13 @@ public class Snake : MonoBehaviour
     private Vector3 moveVector;
     private float stepDist = 1.0f;
     private GameObject newSegment;
+    private Spawner spawner;
+
+    [Inject]
+    void Construct(Spawner spanwer)
+    {
+        this.spawner = spawner;
+    }
 
     void Awake()
     {
@@ -83,4 +91,6 @@ public class Snake : MonoBehaviour
             moveVector = Vector3.down;
         }
     }
+
+    public class Factory : Factory<Snake> { }
 }
