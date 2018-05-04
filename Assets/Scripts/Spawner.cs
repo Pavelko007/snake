@@ -14,6 +14,7 @@ public class Spawner : MonoBehaviour
     {
         this.snakeFactory = snakeFactory;
     }
+
 	// Use this for initialization
 	void Start ()
 	{

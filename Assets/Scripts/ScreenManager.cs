@@ -5,6 +5,13 @@ using UnityEngine;
 public class ScreenManager : MonoBehaviour
 {
     public GameObject StartScreen;
+    public GameObject GameOverScreen;
+    private List<GameObject> screens;
+
+    void Awake()
+    {
+        screens = new List<GameObject>() {StartScreen, GameOverScreen};
+    }
 
     void Start()
     {
@@ -19,6 +26,15 @@ public class ScreenManager : MonoBehaviour
 
     private void HideAll()
     {
-        Debug.LogError("not implemented");
+        foreach (var screen in screens)
+        {
+            screen.SetActive(false);
+        }
+    }
+
+    public void ShowGameOverSceen()
+    {
+        HideAll();
+        GameOverScreen.SetActive(true);
     }
 }
