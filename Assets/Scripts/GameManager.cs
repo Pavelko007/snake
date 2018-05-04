@@ -32,4 +32,9 @@ public class GameManager : MonoBehaviour
     {
         GetComponent<Spawner>().SpawnSnake();//todo
     }
+
+    public void Restart()
+    {
+        Debug.Log("restart");
+    }
 }
