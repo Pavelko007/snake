@@ -57,7 +57,7 @@ public class Snake : MonoBehaviour
 	            newSegment.transform.SetParent(transform, true);
 	            snakeSegmentsList.AddLast(newSegment);
 
-	            spawner.SpawnNextSegment();
+	            spawner.SpawnSegment();
 	        }
 
 	        lastStepTime = Time.time;
@@ -93,6 +93,8 @@ public class Snake : MonoBehaviour
             moveVector = Vector3.down;
         }
     }
+
+  
 
     public class Factory : Factory<Snake> { }
 }

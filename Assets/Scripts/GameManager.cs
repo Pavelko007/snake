@@ -6,11 +6,13 @@ using Zenject;
 public class GameManager : MonoBehaviour
 {
     private ScreenManager screenManager;
+    private Spawner spawner;
 
     [Inject]
-    public void Construct(ScreenManager screenManager)
+    public void Construct(ScreenManager screenManager, Spawner spawner)
     {
         this.screenManager = screenManager;
+        this.spawner = spawner;
     }
 	
 	// Update is called once per frame
@@ -30,11 +32,13 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        GetComponent<Spawner>().SpawnSnake();//todo
+        GetComponent<Spawner>().RespawnAll();//todo
     }
 
     public void Restart()
     {
+        Time.timeScale = 1;
+        spawner.RespawnAll();
         Debug.Log("restart");
     }
 }
