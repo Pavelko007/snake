@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Zenject;
 
 public class Snake : MonoBehaviour
@@ -15,7 +16,6 @@ public class Snake : MonoBehaviour
     private bool createNewSegment;
     private Vector3 moveVector;
     private float stepDist = 1.0f;
-    private GameObject newSegment;
     private Spawner spawner;
 
     [Inject]
@@ -40,38 +40,52 @@ public class Snake : MonoBehaviour
     {
 	    HandleInput();
 
+
 	    if (Time.time - lastStepTime > stepDuration)
 	    {
 	        Vector3 headPos = snakeSegmentsList.First.Value.transform.position;
-	        
 
 	        Vector3 headPosNext = headPos + stepDist * moveVector;
 
-	        snakeSegmentsList.AddFirst(snakeSegmentsList.Last.Value);
-            snakeSegmentsList.RemoveLast();
-	        snakeSegmentsList.First.Value.transform.position = headPosNext;
+	        GameObject collectable;
 
-	        if (createNewSegment)
+	        if (GetCollectable(headPosNext, out collectable))
 	        {
-	            createNewSegment = false;
-	            newSegment.transform.SetParent(transform, true);
-	            snakeSegmentsList.AddLast(newSegment);
+	            collectable.tag = "Untagged";
+                collectable.transform.SetParent(transform, true);
+	            snakeSegmentsList.AddFirst(collectable);
 
 	            spawner.SpawnSegment();
 	        }
+	        else
+	        {
+	            snakeSegmentsList.AddFirst(snakeSegmentsList.Last.Value);
+	            snakeSegmentsList.RemoveLast();
+	            snakeSegmentsList.First.Value.transform.position = headPosNext;
+            }
+	        
 
 	        lastStepTime = Time.time;
 	    }
 	}
 
-    void OnTriggerEnter2D(Collider2D other)
+    private bool GetCollectable(Vector3 pos, out GameObject collectable)
     {
-        if (other.CompareTag("Collectable"))
+        collectable = null;
+        var col = Physics2D.OverlapPoint(pos);
+
+        if (col != null)
         {
-            createNewSegment = true;
-            newSegment = other.gameObject;
-            newSegment.tag = "Untagged";
+            collectable = col.gameObject;
+            
         }
+
+        return col != null;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)//todo
+    {
+        Assert.IsFalse(other.CompareTag("Collectable"));
     }
 
     private void HandleInput()

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class Spawner : MonoBehaviour
@@ -16,11 +14,6 @@ public class Spawner : MonoBehaviour
         this.snakeFactory = snakeFactory;
     }
 
-	// Use this for initialization
-	void Start ()
-	{
-	}
-
     public void SpawnSnake()
     {
         snake = snakeFactory.Create().gameObject;
@@ -33,8 +26,7 @@ public class Spawner : MonoBehaviour
 
     public void SpawnSegment()
     {
-        collectableSegment = Instantiate(BlockPrefab);
-        collectableSegment.transform.position = GetRandomPosition();
+        collectableSegment = Instantiate(BlockPrefab, GetRandomPosition(), Quaternion.identity);
     }
 
     public void RespawnAll()
