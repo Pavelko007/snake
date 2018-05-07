@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df88f89b196d954aba0e5c3f88280d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SnakeColor: {r: 0, g: 0, b: 0, a: 1}
   StartConfiguration:
   - {fileID: 1023318699674678}
   SnakeSegment: {fileID: 1726271490102248, guid: 0d340b68a72080341be8391ea409a296,

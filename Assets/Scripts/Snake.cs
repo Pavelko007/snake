@@ -6,6 +6,8 @@ using Zenject;
 
 public class Snake : MonoBehaviour
 {
+    public Color SnakeColor = Color.black;
+
     public List<GameObject> StartConfiguration;
     public GameObject SnakeSegment;
 
@@ -52,6 +54,7 @@ public class Snake : MonoBehaviour
 
 	        if (TryGetCollectable(headPosNext, out collectable))
 	        {
+                collectable.GetComponent<Block>().ChangeColor(SnakeColor);
 	            collectable.tag = "Untagged";
                 collectable.transform.SetParent(transform, true);
 	            snakeSegmentsList.AddFirst(collectable);
