@@ -17,6 +17,7 @@ public class Snake : MonoBehaviour
     private Vector3 moveVector;
     private float stepDist = 1.0f;
     private Spawner spawner;
+    private string collectableTag = "Collectable";
 
     [Inject]
     void Construct(Spawner spawner)
@@ -49,7 +50,7 @@ public class Snake : MonoBehaviour
 
 	        GameObject collectable;
 
-	        if (GetCollectable(headPosNext, out collectable))
+	        if (TryGetCollectable(headPosNext, out collectable))
 	        {
 	            collectable.tag = "Untagged";
                 collectable.transform.SetParent(transform, true);
@@ -63,29 +64,27 @@ public class Snake : MonoBehaviour
 	            snakeSegmentsList.RemoveLast();
 	            snakeSegmentsList.First.Value.transform.position = headPosNext;
             }
-	        
 
 	        lastStepTime = Time.time;
 	    }
 	}
 
-    private bool GetCollectable(Vector3 pos, out GameObject collectable)
+    private bool TryGetCollectable(Vector3 pos, out GameObject collectable)
     {
         collectable = null;
         var col = Physics2D.OverlapPoint(pos);
 
-        if (col != null)
+        if (col != null && col.gameObject.CompareTag(collectableTag))
         {
             collectable = col.gameObject;
-            
         }
 
-        return col != null;
+        return collectable != null;
     }
 
     void OnTriggerEnter2D(Collider2D other)//todo
     {
-        Assert.IsFalse(other.CompareTag("Collectable"));
+        Assert.IsFalse(other.CompareTag(collectableTag));
     }
 
     private void HandleInput()
