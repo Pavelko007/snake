@@ -14,8 +14,6 @@ public class Snake : MonoBehaviour
     private float lastStepTime;
     private float stepDuration = .5f;
     private LinkedList<GameObject> snakeSegmentsList = new LinkedList<GameObject>();
-    private Vector3 newSegmentPosition;
-    private bool createNewSegment;
     private Vector3 moveVector;
     private float stepDist = 1.0f;
     private Spawner spawner;
