@@ -85,11 +85,6 @@ public class Snake : MonoBehaviour
         return collectable != null;
     }
 
-    void OnTriggerEnter2D(Collider2D other)//todo
-    {
-        Assert.IsFalse(other.CompareTag(collectableTag));
-    }
-
     private void HandleInput()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
