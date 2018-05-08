@@ -19,11 +19,13 @@ public class Snake : MonoBehaviour
     private float stepDist = 1.0f;
     private Spawner spawner;
     private string collectableTag = "Collectable";
+    private GameManager gameManager;
 
     [Inject]
-    void Construct(Spawner spawner)
+    void Construct(Spawner spawner, GameManager gameManager)
     {
         this.spawner = spawner;
+        this.gameManager = gameManager;
     }
 
     void Awake()
@@ -49,15 +51,22 @@ public class Snake : MonoBehaviour
 
 	        Vector3 headPosNext = headPos + stepDist * moveVector;
 
-	        GameObject collectable;
+	        GameObject collideable = GetCollideable(headPosNext);
 
-	        if (TryGetCollectable(headPosNext, out collectable))
+            if (collideable != null)
 	        {
-	            collectable.tag = "Snake";
-                collectable.transform.SetParent(transform, true);
-	            snakeSegmentsList.AddFirst(collectable);
+	            if (collideable.CompareTag(collectableTag))
+	            {
+	                collideable.tag = "Snake";
+	                collideable.transform.SetParent(transform, true);
+	                snakeSegmentsList.AddFirst(collideable);
 
-	            spawner.SpawnSegment();
+	                spawner.SpawnSegment();
+	            }
+                else if (collideable.CompareTag("Snake"))
+	            {
+                    gameManager.GameOver();
+	            }
 	        }
 	        else
 	        {
@@ -81,17 +90,11 @@ public class Snake : MonoBehaviour
         snakeSegmentsList.First.Value.GetComponent<Block>().ChangeColor(HeadColor);
     }
 
-    private bool TryGetCollectable(Vector3 pos, out GameObject collectable)
+    private GameObject GetCollideable(Vector3 pos)
     {
-        collectable = null;
         var col = Physics2D.OverlapPoint(pos);
-
-        if (col != null && col.gameObject.CompareTag(collectableTag))
-        {
-            collectable = col.gameObject;
-        }
-
-        return collectable != null;
+        if (col != null) return col.gameObject;
+        else return null;
     }
 
     private void HandleInput()

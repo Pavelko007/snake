@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 	    }
 	}
 
-    private void GameOver()
+    public void GameOver()
     {
         Time.timeScale = 0;
         screenManager.ShowGameOverSceen();
