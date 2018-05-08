@@ -53,7 +53,7 @@ public class Snake : MonoBehaviour
 
 	        if (TryGetCollectable(headPosNext, out collectable))
 	        {
-	            collectable.tag = "Untagged";
+	            collectable.tag = "Snake";
                 collectable.transform.SetParent(transform, true);
 	            snakeSegmentsList.AddFirst(collectable);
 

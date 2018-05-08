@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 61076145033789566}
   m_Layer: 0
   m_Name: Block
-  m_TagString: Untagged
+  m_TagString: Snake
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SnakeColor: {r: 0, g: 0, b: 0, a: 1}
+  HeadColor: {r: 0, g: 1, b: 0, a: 1}
   StartConfiguration:
   - {fileID: 1023318699674678}
   SnakeSegment: {fileID: 1726271490102248, guid: 0d340b68a72080341be8391ea409a296,
