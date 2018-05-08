@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Zenject;
@@ -7,7 +8,7 @@ using Zenject;
 public class Snake : MonoBehaviour
 {
     public Color SnakeColor = Color.black;
-
+    public Color HeadColor = Color.green;
     public List<GameObject> StartConfiguration;
     public GameObject SnakeSegment;
 
@@ -52,7 +53,6 @@ public class Snake : MonoBehaviour
 
 	        if (TryGetCollectable(headPosNext, out collectable))
 	        {
-                collectable.GetComponent<Block>().ChangeColor(SnakeColor);
 	            collectable.tag = "Untagged";
                 collectable.transform.SetParent(transform, true);
 	            snakeSegmentsList.AddFirst(collectable);
@@ -66,9 +66,20 @@ public class Snake : MonoBehaviour
 	            snakeSegmentsList.First.Value.transform.position = headPosNext;
             }
 
-	        lastStepTime = Time.time;
+	        UpdateColors();
+
+            lastStepTime = Time.time;
 	    }
 	}
+
+    private void UpdateColors()
+    {
+        foreach (var segment in snakeSegmentsList)
+        {
+            segment.GetComponent<Block>().ChangeColor(SnakeColor);
+        }
+        snakeSegmentsList.First.Value.GetComponent<Block>().ChangeColor(HeadColor);
+    }
 
     private bool TryGetCollectable(Vector3 pos, out GameObject collectable)
     {
