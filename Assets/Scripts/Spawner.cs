@@ -21,7 +21,9 @@ public class Spawner : MonoBehaviour
 
     private static Vector3 GetRandomPosition()
     {
-        return new Vector3(Random.Range(-3,3), Random.Range(-3, 3), 0);
+        int minX = -5, minY = -9, maxX = 5, maxY = 9;
+        
+        return new Vector3(Random.Range(minX,maxX), Random.Range(minY, maxY), 0);
     }
 
     public void SpawnSegment()
