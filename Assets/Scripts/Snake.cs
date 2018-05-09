@@ -16,7 +16,6 @@ public class Snake : MonoBehaviour
     private float lastStepTime;
     private float stepDuration = .5f;
     private LinkedList<GameObject> snakeSegmentsList = new LinkedList<GameObject>();
-    private Vector3 moveVector;
     private float stepDist = 1.0f;
     private Spawner spawner;
     private string collectableTag = "Collectable";
@@ -34,6 +33,15 @@ public class Snake : MonoBehaviour
 
     private Dir? curDir;
 
+    public Vector3 MoveVector
+    {
+        get
+        {
+            Assert.IsTrue(curDir.HasValue);
+            return GetDirVector(curDir.Value);
+        }
+    }
+
     [Inject]
     void Construct(Spawner spawner, GameManager gameManager)
     {
@@ -48,8 +56,6 @@ public class Snake : MonoBehaviour
         {
             snakeSegmentsList.AddLast(segment);
         }
-
-        moveVector = Vector3.up;
     }
 
     void Start()
@@ -67,13 +73,12 @@ public class Snake : MonoBehaviour
 	    {
 	        Vector3 headPos = snakeSegmentsList.First.Value.transform.position;
 
-	        Vector3 headPosNext = headPos + stepDist * moveVector;
+	        Vector3 headPosNext = headPos + stepDist * MoveVector;
 
 	        GameObject collideable = GridManager.TryGetCollideable(headPosNext);
 
             if (collideable != null)
             {
-                
                 if (collideable.CompareTag(collectableTag))
 	            {
 	                collideable.tag = snakeTag;
@@ -140,9 +145,6 @@ public class Snake : MonoBehaviour
         //{
 
         //}
-
-        moveVector = GetDirVector(curDir.Value);
-
     }
 
     private Vector3 GetDirVector(Dir dir)
