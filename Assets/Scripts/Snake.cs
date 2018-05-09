@@ -38,6 +38,11 @@ public class Snake : MonoBehaviour
 
         moveVector = Vector3.up;
     }
+
+    void Start()
+    {
+        UpdateColors();
+    }
     
 	// Update is called once per frame
 	void Update ()
