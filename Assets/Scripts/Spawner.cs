@@ -19,16 +19,9 @@ public class Spawner : MonoBehaviour
         snake = snakeFactory.Create().gameObject;
     }
 
-    private static Vector3 GetRandomPosition()
-    {
-        int minX = -5, minY = -9, maxX = 5, maxY = 9;
-        
-        return new Vector3(Random.Range(minX,maxX), Random.Range(minY, maxY), 0);
-    }
-
     public void SpawnSegment()
     {
-        collectableSegment = Instantiate(BlockPrefab, GetRandomPosition(), Quaternion.identity);
+        collectableSegment = Instantiate(BlockPrefab, GridManager.GetRandomPosition(), Quaternion.identity);
     }
 
     public void RespawnAll()

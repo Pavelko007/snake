@@ -57,7 +57,7 @@ public class Snake : MonoBehaviour
 
 	        Vector3 headPosNext = headPos + stepDist * moveVector;
 
-	        GameObject collideable = GetCollideable(headPosNext);
+	        GameObject collideable = GridManager.GetCollideable(headPosNext);
 
             if (collideable != null)
             {
@@ -98,13 +98,6 @@ public class Snake : MonoBehaviour
             segment.GetComponent<Block>().ChangeColor(SnakeColor);
         }
         snakeSegmentsList.First.Value.GetComponent<Block>().ChangeColor(HeadColor);
-    }
-
-    private GameObject GetCollideable(Vector3 pos)
-    {
-        var col = Physics2D.OverlapPoint(pos);
-        if (col != null) return col.gameObject;
-        else return null;
     }
 
     private void HandleInput()
