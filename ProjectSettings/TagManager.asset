@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Collectable
   - Snake
+  - asteroid
+  - Wall
   layers:
   - Default
   - TransparentFX

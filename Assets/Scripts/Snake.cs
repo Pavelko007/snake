@@ -20,6 +20,8 @@ public class Snake : MonoBehaviour
     private Spawner spawner;
     private string collectableTag = "Collectable";
     private GameManager gameManager;
+    private string snakeTag = "Snake";
+    private string wallTag = "Wall";
 
     [Inject]
     void Construct(Spawner spawner, GameManager gameManager)
@@ -49,7 +51,6 @@ public class Snake : MonoBehaviour
     {
 	    HandleInput();
 
-
 	    if (Time.time - lastStepTime > stepDuration)
 	    {
 	        Vector3 headPos = snakeSegmentsList.First.Value.transform.position;
@@ -59,20 +60,24 @@ public class Snake : MonoBehaviour
 	        GameObject collideable = GetCollideable(headPosNext);
 
             if (collideable != null)
-	        {
-	            if (collideable.CompareTag(collectableTag))
+            {
+                
+                if (collideable.CompareTag(collectableTag))
 	            {
-	                collideable.tag = "Snake";
+	                collideable.tag = snakeTag;
 	                collideable.transform.SetParent(transform, true);
 	                snakeSegmentsList.AddFirst(collideable);
 
 	                spawner.SpawnSegment();
 	            }
-                else if (collideable.CompareTag("Snake"))
-	            {
-                    gameManager.GameOver();
-	            }
-	        }
+                else
+                {
+                    if (collideable.CompareTag(snakeTag) || collideable.CompareTag(wallTag))
+                    {
+                        gameManager.GameOver();
+                    }
+                }
+            }
 	        else
 	        {
 	            snakeSegmentsList.AddFirst(snakeSegmentsList.Last.Value);
