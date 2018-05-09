@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -23,6 +24,16 @@ public class Snake : MonoBehaviour
     private string snakeTag = "Snake";
     private string wallTag = "Wall";
 
+    enum Dir
+    {
+        Up = 0,
+        Left = 1,
+        Down = 2, 
+        Right = 3
+    }
+
+    private Dir? curDir;
+
     [Inject]
     void Construct(Spawner spawner, GameManager gameManager)
     {
@@ -45,9 +56,10 @@ public class Snake : MonoBehaviour
     {
         UpdateColors();
     }
-    
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+
+    void Update ()
     {
 	    HandleInput();
 
@@ -57,7 +69,7 @@ public class Snake : MonoBehaviour
 
 	        Vector3 headPosNext = headPos + stepDist * moveVector;
 
-	        GameObject collideable = GridManager.GetCollideable(headPosNext);
+	        GameObject collideable = GridManager.TryGetCollideable(headPosNext);
 
             if (collideable != null)
             {
@@ -104,23 +116,51 @@ public class Snake : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            moveVector = Vector3.left;
+            TryChangeDirection(Dir.Left);
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            moveVector = Vector3.right;
+            TryChangeDirection(Dir.Right);
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            moveVector = Vector3.up;
+            TryChangeDirection(Dir.Up);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            moveVector = Vector3.down;
+            TryChangeDirection(Dir.Down);
         }
     }
 
-  
+    private void TryChangeDirection(Dir newDir)
+    {
+        var prevDir = curDir;
+        curDir = newDir;
+        //if (prevDir.HasValue)
+        //{
+
+        //}
+
+        moveVector = GetDirVector(curDir.Value);
+    }
+
+    private Vector3 GetDirVector(Dir dir)
+    {
+        switch (dir)
+        {
+            case Dir.Up:
+                return Vector3.up;
+            case Dir.Left:
+                return Vector3.left;
+            case Dir.Down:
+                return Vector3.down;
+            case Dir.Right:
+                return Vector3.right;
+            default:
+                throw new ArgumentOutOfRangeException("dir", dir, null);
+        }
+    }
+
 
     public class Factory : Factory<Snake> { }
 }
