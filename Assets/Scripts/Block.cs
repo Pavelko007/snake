@@ -1,19 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Block : MonoBehaviour
+namespace Snake
 {
-    public Color DefaultColor;
-
-	// Use this for initialization
-	void Awake() {
-		ChangeColor(DefaultColor);
-	}
-
-    public void ChangeColor(Color color)
+    public class Block : MonoBehaviour
     {
-        GetComponent<Renderer>().material.color = color;
-    }
+        public Color DefaultColor;
+
+        // Use this for initialization
+        void Awake() {
+            ChangeColor(DefaultColor);
+        }
+
+        public void ChangeColor(Color color)
+        {
+            GetComponent<Renderer>().material.color = color;
+        }
 	
+    }
 }

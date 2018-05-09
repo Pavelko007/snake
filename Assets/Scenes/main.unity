@@ -1056,8 +1056,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28090956635c67948ac0b557d0e66b89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlockPrefab: {fileID: 1726271490102248, guid: b212f96977a0f0b4296bdb65cb411de9,
-    type: 2}
 --- !u!114 &343625800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1640,7 +1638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &690991026
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5366,8 +5364,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 001e52790569ddb4087098f3aabf1507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SnakePrefab: {fileID: 1934988197406358, guid: de520354692849f4d944e8da7dd5948e,
-    type: 2}
+  settings:
+    SnakePrefab: {fileID: 0}
+    CollectablePrefab: {fileID: 0}
 --- !u!114 &1964573330
 MonoBehaviour:
   m_ObjectHideFlags: 0

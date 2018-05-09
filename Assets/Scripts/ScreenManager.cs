@@ -1,40 +1,42 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ScreenManager : MonoBehaviour
+namespace Snake
 {
-    public GameObject StartScreen;
-    public GameObject GameOverScreen;
-    private List<GameObject> screens;
-
-    void Awake()
+    public class ScreenManager : MonoBehaviour
     {
-        screens = new List<GameObject>() {StartScreen, GameOverScreen};
-    }
+        public GameObject StartScreen;
+        public GameObject GameOverScreen;
+        private List<GameObject> screens;
 
-    void Start()
-    {
-        ShowStartSceen();
-    }
-
-    public void ShowStartSceen()
-    {
-        HideAll();
-        StartScreen.SetActive(true);
-    }
-
-    public void HideAll()
-    {
-        foreach (var screen in screens)
+        void Awake()
         {
-            screen.SetActive(false);
+            screens = new List<GameObject>() {StartScreen, GameOverScreen};
         }
-    }
 
-    public void ShowGameOverSceen()
-    {
-        HideAll();
-        GameOverScreen.SetActive(true);
+        void Start()
+        {
+            ShowStartSceen();
+        }
+
+        public void ShowStartSceen()
+        {
+            HideAll();
+            StartScreen.SetActive(true);
+        }
+
+        public void HideAll()
+        {
+            foreach (var screen in screens)
+            {
+                screen.SetActive(false);
+            }
+        }
+
+        public void ShowGameOverSceen()
+        {
+            HideAll();
+            GameOverScreen.SetActive(true);
+        }
     }
 }

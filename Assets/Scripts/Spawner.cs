@@ -1,45 +1,42 @@
-﻿using System;
+﻿using Snake.Installers;
 using UnityEngine;
 using Zenject;
 
-public class Spawner : MonoBehaviour
+namespace Snake
 {
-    private Snake.Factory snakeFactory;
-    private GameObject snake;
-    private GameObject collectableSegment;
-    private Settings settings;
-
-    [Inject]
-    void Construct(Snake.Factory snakeFactory, Settings settings)
+    public class Spawner : MonoBehaviour
     {
-        this.settings = settings;
-        this.snakeFactory = snakeFactory;
-    }
+        private Snake.Factory snakeFactory;
+        private GameObject snake;
+        private GameObject collectableSegment;
+        private GameInstaller.Settings settings;
 
-    public void SpawnSnake()
-    {
-        snake = snakeFactory.Create().gameObject;
-    }
+        [Inject]
+        void Construct(Snake.Factory snakeFactory, GameInstaller.Settings settings)
+        {
+            this.settings = settings;
+            this.snakeFactory = snakeFactory;
+        }
 
-    public void SpawnSegment()
-    {
-        collectableSegment = Instantiate(settings.CollectablePrefab, GridManager.GetRandomPosition(), Quaternion.identity);
-    }
+        public void SpawnSnake()
+        {
+            snake = snakeFactory.Create().gameObject;
+        }
 
-    public void RespawnAll()
-    {
-        DestroyImmediate(snake);
-        snake = null;
-        DestroyImmediate(collectableSegment);
-        collectableSegment = null;
+        public void SpawnSegment()
+        {
+            collectableSegment = Instantiate(settings.CollectablePrefab, GridManager.GetRandomPosition(), Quaternion.identity);
+        }
 
-        SpawnSnake();
-        SpawnSegment();
-    }
+        public void RespawnAll()
+        {
+            DestroyImmediate(snake);
+            snake = null;
+            DestroyImmediate(collectableSegment);
+            collectableSegment = null;
 
-    [Serializable]
-    public class Settings
-    {
-        public GameObject CollectablePrefab;
+            SpawnSnake();
+            SpawnSegment();
+        }
     }
 }

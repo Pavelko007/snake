@@ -1,13 +1,16 @@
 using UnityEngine;
 using Zenject;
 
-[CreateAssetMenu(fileName = "GameSettingsInstaller", menuName = "Installers/GameSettingsInstaller")]
-public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInstaller>
+namespace Snake.Installers
 {
-    public Spawner.Settings SpawnerSettings;
-
-    public override void InstallBindings()
+    [CreateAssetMenu(fileName = "GameSettingsInstaller", menuName = "Installers/GameSettingsInstaller")]
+    public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInstaller>
     {
-        Container.BindInstance(SpawnerSettings);
+        public GameInstaller.Settings GameSettings;
+
+        public override void InstallBindings()
+        {
+            Container.BindInstance(GameSettings);
+        }
     }
 }

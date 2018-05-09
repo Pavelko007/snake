@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e69ac745f3587b04ab4a6df1aacb91e3, type: 3}
   m_Name: GameSettingsInstaller
   m_EditorClassIdentifier: 
-  SpawnerSettings:
+  GameSettings:
+    SnakePrefab: {fileID: 1934988197406358, guid: de520354692849f4d944e8da7dd5948e,
+      type: 2}
     CollectablePrefab: {fileID: 1726271490102248, guid: b212f96977a0f0b4296bdb65cb411de9,
       type: 2}

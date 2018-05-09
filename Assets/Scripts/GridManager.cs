@@ -1,26 +1,29 @@
 ﻿using UnityEngine;
 
-public class GridManager
+namespace Snake
 {
-    private static readonly int _minX = -5;
-    private static readonly int _minY = -9;
-    private static readonly int _maxX = 5;
-    private static readonly int _maxY = 9;
-
-    public static GameObject TryGetCollideable(Vector3 pos)
+    public class GridManager
     {
-        var col = Physics2D.OverlapPoint(pos);
-        if (col != null) return col.gameObject;
-        else return null;
-    }
+        private static readonly int _minX = -5;
+        private static readonly int _minY = -9;
+        private static readonly int _maxX = 5;
+        private static readonly int _maxY = 9;
 
-    public static Vector3 GetRandomPosition()
-    {
-        Vector3 randomPosition;
+        public static GameObject TryGetCollideable(Vector3 pos)
+        {
+            var col = Physics2D.OverlapPoint(pos);
+            if (col != null) return col.gameObject;
+            else return null;
+        }
 
-        do randomPosition = new Vector3(Random.Range(_minX, _maxX), Random.Range(_minY, _maxY), 0);
-        while (null != TryGetCollideable(randomPosition));
+        public static Vector3 GetRandomPosition()
+        {
+            Vector3 randomPosition;
 
-        return randomPosition;
+            do randomPosition = new Vector3(Random.Range(_minX, _maxX), Random.Range(_minY, _maxY), 0);
+            while (null != TryGetCollideable(randomPosition));
+
+            return randomPosition;
+        }
     }
 }

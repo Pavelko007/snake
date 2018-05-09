@@ -1,26 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class RestartButton : MonoBehaviour
+namespace Snake
 {
-    private GameManager gameManager;
-
-    [Inject]
-    void Construct(GameManager gameManager)
+    public class RestartButton : MonoBehaviour
     {
-        this.gameManager = gameManager;
-    }
+        private GameManager gameManager;
 
-	void Awake ()
-    {
-		GetComponent<Button>().onClick.AddListener(OnRestartButtonClicked);
-	}
+        [Inject]
+        void Construct(GameManager gameManager)
+        {
+            this.gameManager = gameManager;
+        }
 
-    public void OnRestartButtonClicked()
-    {
-        gameManager.Restart();
+        void Awake ()
+        {
+            GetComponent<Button>().onClick.AddListener(OnRestartButtonClicked);
+        }
+
+        public void OnRestartButtonClicked()
+        {
+            gameManager.Restart();
+        }
     }
 }

@@ -1,12 +1,23 @@
+using System;
 using UnityEngine;
 using Zenject;
 
-public class GameInstaller : MonoInstaller<GameInstaller>
+namespace Snake.Installers
 {
-    public GameObject SnakePrefab;
-
-    public override void InstallBindings()
+    public class GameInstaller : MonoInstaller<GameInstaller>
     {
-        Container.BindFactory<Snake, Snake.Factory>().FromComponentInNewPrefab(SnakePrefab);
+        [Inject] private Settings settings;
+
+        public override void InstallBindings()
+        {
+            Container.BindFactory<Snake, Snake.Factory>().FromComponentInNewPrefab(settings.SnakePrefab);
+        }
+
+        [Serializable]
+        public class Settings
+        {
+            public GameObject SnakePrefab;
+            public GameObject CollectablePrefab;
+        }
     }
 }
