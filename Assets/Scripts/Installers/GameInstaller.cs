@@ -10,6 +10,7 @@ namespace Snake.Installers
 
         public override void InstallBindings()
         {
+            Container.Bind<Spawner>().AsSingle();
             Container.BindFactory<Snake, Snake.Factory>().FromComponentInNewPrefab(settings.SnakePrefab);
         }
 

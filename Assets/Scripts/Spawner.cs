@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Snake
 {
-    public class Spawner : MonoBehaviour
+    public class Spawner 
     {
         private Snake.Factory snakeFactory;
         private GameObject snake;
@@ -25,14 +25,14 @@ namespace Snake
 
         public void SpawnSegment()
         {
-            collectableSegment = Instantiate(settings.CollectablePrefab, GridManager.GetRandomPosition(), Quaternion.identity);
+            collectableSegment = GameObject.Instantiate(settings.CollectablePrefab, GridManager.GetRandomPosition(), Quaternion.identity);
         }
 
         public void RespawnAll()
         {
-            DestroyImmediate(snake);
+            GameObject.DestroyImmediate(snake);
             snake = null;
-            DestroyImmediate(collectableSegment);
+            GameObject.DestroyImmediate(collectableSegment);
             collectableSegment = null;
 
             SpawnSnake();
