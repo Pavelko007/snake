@@ -1,16 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Zenject;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject BlockPrefab;
     private Snake.Factory snakeFactory;
     private GameObject snake;
     private GameObject collectableSegment;
+    private Settings settings;
 
     [Inject]
-    void Construct(Snake.Factory snakeFactory)
+    void Construct(Snake.Factory snakeFactory, Settings settings)
     {
+        this.settings = settings;
         this.snakeFactory = snakeFactory;
     }
 
@@ -21,7 +23,7 @@ public class Spawner : MonoBehaviour
 
     public void SpawnSegment()
     {
-        collectableSegment = Instantiate(BlockPrefab, GridManager.GetRandomPosition(), Quaternion.identity);
+        collectableSegment = Instantiate(settings.CollectablePrefab, GridManager.GetRandomPosition(), Quaternion.identity);
     }
 
     public void RespawnAll()
@@ -33,5 +35,11 @@ public class Spawner : MonoBehaviour
 
         SpawnSnake();
         SpawnSegment();
+    }
+
+    [Serializable]
+    public class Settings
+    {
+        public GameObject CollectablePrefab;
     }
 }
