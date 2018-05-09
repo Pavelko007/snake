@@ -32,13 +32,13 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        GetComponent<Spawner>().RespawnAll();//todo
+        Restart();
     }
 
     public void Restart()
     {
+        screenManager.HideAll();
         Time.timeScale = 1;
         spawner.RespawnAll();
-        Debug.Log("restart");
     }
 }

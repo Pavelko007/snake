@@ -24,7 +24,7 @@ public class ScreenManager : MonoBehaviour
         StartScreen.SetActive(true);
     }
 
-    private void HideAll()
+    public void HideAll()
     {
         foreach (var screen in screens)
         {
