@@ -63,7 +63,7 @@ public class Snake : MonoBehaviour
     {
 	    HandleInput();
 
-	    if (Time.time - lastStepTime > stepDuration)
+	    if (curDir.HasValue && Time.time - lastStepTime > stepDuration)
 	    {
 	        Vector3 headPos = snakeSegmentsList.First.Value.transform.position;
 
@@ -142,6 +142,7 @@ public class Snake : MonoBehaviour
         //}
 
         moveVector = GetDirVector(curDir.Value);
+
     }
 
     private Vector3 GetDirVector(Dir dir)
