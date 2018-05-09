@@ -71,42 +71,47 @@ public class Snake : MonoBehaviour
 
 	    if (curDir.HasValue && Time.time - lastStepTime > stepDuration)
 	    {
-	        Vector3 headPos = snakeSegmentsList.First.Value.transform.position;
-
-	        Vector3 headPosNext = headPos + stepDist * MoveVector;
-
-	        GameObject collideable = GridManager.TryGetCollideable(headPosNext);
-
-            if (collideable != null)
-            {
-                if (collideable.CompareTag(collectableTag))
-	            {
-	                collideable.tag = snakeTag;
-	                collideable.transform.SetParent(transform, true);
-	                snakeSegmentsList.AddFirst(collideable);
-
-	                spawner.SpawnSegment();
-	            }
-                else
-                {
-                    if (collideable.CompareTag(snakeTag) || collideable.CompareTag(wallTag))
-                    {
-                        gameManager.GameOver();
-                    }
-                }
-            }
-	        else
-	        {
-	            snakeSegmentsList.AddFirst(snakeSegmentsList.Last.Value);
-	            snakeSegmentsList.RemoveLast();
-	            snakeSegmentsList.First.Value.transform.position = headPosNext;
-            }
-
-	        UpdateColors();
-
-            lastStepTime = Time.time;
+	        ProcessStep();
 	    }
 	}
+
+    private void ProcessStep()
+    {
+        Vector3 headPos = snakeSegmentsList.First.Value.transform.position;
+
+        Vector3 headPosNext = headPos + stepDist * MoveVector;
+
+        GameObject collideable = GridManager.TryGetCollideable(headPosNext);
+
+        if (collideable != null)
+        {
+            if (collideable.CompareTag(collectableTag))
+            {
+                collideable.tag = snakeTag;
+                collideable.transform.SetParent(transform, true);
+                snakeSegmentsList.AddFirst(collideable);
+
+                spawner.SpawnSegment();
+            }
+            else
+            {
+                if (collideable.CompareTag(snakeTag) || collideable.CompareTag(wallTag))
+                {
+                    gameManager.GameOver();
+                }
+            }
+        }
+        else
+        {
+            snakeSegmentsList.AddFirst(snakeSegmentsList.Last.Value);
+            snakeSegmentsList.RemoveLast();
+            snakeSegmentsList.First.Value.transform.position = headPosNext;
+        }
+
+        UpdateColors();
+
+        lastStepTime = Time.time;
+    }
 
     private void UpdateColors()
     {
@@ -145,6 +150,7 @@ public class Snake : MonoBehaviour
         //{
 
         //}
+        ProcessStep();
     }
 
     private Vector3 GetDirVector(Dir dir)
