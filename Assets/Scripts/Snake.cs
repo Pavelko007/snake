@@ -31,6 +31,8 @@ public class Snake : MonoBehaviour
 
     private Dir? curDir;
 
+    private Vector3 pressPosition;
+
     public Vector3 MoveVector
     {
         get
@@ -122,6 +124,18 @@ public class Snake : MonoBehaviour
 
     private void HandleInput()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            pressPosition = Input.mousePosition;
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            Vector3 swipeVector = (Input.mousePosition - pressPosition).normalized;
+            TryChangeDirection(GetDragDirection(swipeVector));
+        }
+
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             TryChangeDirection(Dir.Left);
@@ -139,7 +153,22 @@ public class Snake : MonoBehaviour
             TryChangeDirection(Dir.Down);
         }
     }
-
+    private Dir GetDragDirection(Vector3 dragVector)
+    {
+        float positiveX = Mathf.Abs(dragVector.x);
+        float positiveY = Mathf.Abs(dragVector.y);
+        Dir draggedDir;
+        if (positiveX > positiveY)
+        {
+            draggedDir = (dragVector.x > 0) ? Dir.Right : Dir.Left;
+        }
+        else
+        {
+            draggedDir = (dragVector.y > 0) ? Dir.Up : Dir.Down;
+        }
+        Debug.Log(draggedDir);
+        return draggedDir;
+    }
     private void TryChangeDirection(Dir newDir)
     {
         if (curDir.HasValue)
