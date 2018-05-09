@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Zenject;
@@ -23,7 +21,7 @@ public class Snake : MonoBehaviour
     private string snakeTag = "Snake";
     private string wallTag = "Wall";
 
-    enum Dir
+    enum Dir //don't reorder enum values
     {
         Up = 0,
         Left = 1,
@@ -144,13 +142,21 @@ public class Snake : MonoBehaviour
 
     private void TryChangeDirection(Dir newDir)
     {
-        var prevDir = curDir;
-        curDir = newDir;
-        //if (prevDir.HasValue)
-        //{
+        if (curDir.HasValue)
+        {
+            if (curDir == newDir) return;
 
-        //}
+            var isOppositeDirections = IsOppositeDirections(newDir, curDir.Value);
+            if (isOppositeDirections) return;
+        }
+        curDir = newDir;
         ProcessStep();
+    }
+
+    private bool IsOppositeDirections(Dir newDir, Dir dir)
+    {
+        int dirDist = Math.Abs((int) dir - (int) newDir);
+        return 2 == dirDist;
     }
 
     private Vector3 GetDirVector(Dir dir)
@@ -169,7 +175,6 @@ public class Snake : MonoBehaviour
                 throw new ArgumentOutOfRangeException("dir", dir, null);
         }
     }
-
 
     public class Factory : Factory<Snake> { }
 }
